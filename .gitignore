@@ -1,0 +1,10 @@
+node_modules/
+target/
+rollout-pdfs/
+*.log
+.env
+.idea/
+.vscode/
+dist/
+build/
+*.class

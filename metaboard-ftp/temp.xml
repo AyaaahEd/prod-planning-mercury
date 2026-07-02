@@ -1,0 +1,38 @@
+<Plan Name="1" TotalCost="20.596875752075196">
+<Layouts>
+<Layout ID="ee74e238-6db9-4fe8-a44e-1c88295224c3" LinkID="bb9c7e5d47e193c5a9d9f848cad273ce" Index="0" Grade="UNCOATED" Weight="220gsm" MillSheetSize="195 102" MillName="" MillSheetGrain="V" CutSheetSize="195 102" NoOfCutSheetPerMillSheet="0" Workstyle="Simplex" Copies="1" WastageCopies="0" GripperMargin="0" PressName="Kader" FrontColors="CMYK" BackColors="" FrontCoatings="" BackCoatings="" GrainDirection="AcrossTheDrum" Cost="20.6" PrintingMakeReadyTime="1000" PrintingRunningTime="2.029835" InkPlateCount="0" CoatingPlateCount="0" CuttingLength="1160" CreasingLength="0" PerforationLength="0" GuillotineCutCount="10" SheetUsage="90.50%" Code="Kader-20260206 11:28-0001" Margin="3.5 0 3.5 0" TotalStationsCount="4" TotalPageCount="4">
+<PlacedObject ProductID="1000049046" ComponentName="IPO_445824" ComponentID="1" DueDate="2026-02-10" Group="test" SectionIndex="" WebIndex="" SectionLabel="" FoldingName="U1-1-1" ContentSource="IPO_445824.pdf" Columns="1" Rows="1" Ups="2" PageCount="1" BackPrinting="false" AreaUsage="50.00" RequiredCopies="2" ProducedCopies="2" Width="100.000" Height="45.000">
+<Placement CTM="0 1 -1 0 49.5 1"/>
+<Placement CTM="0 1 -1 0 96.5 1"/>
+</PlacedObject>
+<PlacedObject ProductID="1000049046" ComponentName="IPO_445819" ComponentID="2" DueDate="2026-02-10" Group="test" SectionIndex="" WebIndex="" SectionLabel="" FoldingName="U1-1-1" ContentSource="IPO_445819.pdf" Columns="1" Rows="1" Ups="2" PageCount="1" BackPrinting="false" AreaUsage="50.00" RequiredCopies="2" ProducedCopies="2" Width="100.000" Height="45.000">
+<Placement CTM="0 1 -1 0 143.5 1"/>
+<Placement CTM="0 1 -1 0 190.5 1"/>
+</PlacedObject>
+<Operations>
+<Operation Name="Digital cuttting" Machine="DieCutter" Cost="$3.83"/>
+<Operation Name="Printing" Machine="Kader" Cost="$16.72"/>
+</Operations>
+</Layout>
+</Layouts>
+<BoundComponents/>
+<UnboundComponents>
+<UJob ProductID="1000049046" Name="IPO_445824" ComponentID="1" PlanningStatus="Complete">
+<RunList>
+<Run Pages="1" RunType="Document" URL="file:///D:/The_PDF/IPO_445824.pdf"/>
+</RunList>
+</UJob>
+<UJob ProductID="1000049046" Name="IPO_445819" ComponentID="2" PlanningStatus="Complete">
+<RunList>
+<Run Pages="1" RunType="Document" URL="file:///D:/The_PDF/IPO_445819.pdf"/>
+</RunList>
+</UJob>
+</UnboundComponents>
+<Products>
+<Pdt ProductID="1000049046" ProductType="" CustomerID="" Copies="1">
+<Property Name="Name" Value="1000049046"/>
+<Property Name="ColPrinter" Value="Optimaal"/>
+<Property Name="BleedKind" Value="K"/>
+</Pdt>
+</Products>
+</Plan> 
