@@ -43,6 +43,33 @@ services:
     depends_on:
       - zookeeper
 
+  backend:
+    build:
+      context: ./production-service
+      dockerfile: Dockerfile
+    container_name: mercury-backend
+    ports:
+      - "8080:8080"
+    environment:
+      # Surcharge de localhost par les noms des conteneurs Docker internes
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mercury_production
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/mercury_production_views
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    depends_on:
+      - postgres
+      - mongodb
+      - kafka
+
+  frontend:
+    build:
+      context: ./frontend/production-dashboard
+      dockerfile: Dockerfile
+    container_name: mercury-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
 volumes:
   postgres_data:
   mongo_data:

@@ -175,7 +175,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             letterSpacing: '-0.04em',
             marginBottom: '8px'
           }}>
-            MERCURY FLOORING
+            PRODUCTION PLANNING
           </h1>
           <p style={{ color: '#64748b', fontSize: '1rem', fontWeight: 500 }}>
             Production Planning Control Center

@@ -1,10 +1,9 @@
-package com.elavi.productionplanning.rollsout.repository.readmodel;
+﻿package com.elavi.productionplanning.rollsout.repository.readmodel;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.ArrayList;
 

@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import LoginPage from './LoginPage';
 import type { Section } from './Sidebar';
 import Sidebar from './Sidebar';
+import Dashboard from './Dashboard';
 import RolloutPage from './RolloutPage';
+import RollsInPage from './RollsInPage';
 
 // API Base URL
 const API_BASE = 'http://localhost:8080/api/v1/production';
@@ -114,6 +116,34 @@ export default function App() {
   const [selectedFormIds, setSelectedFormIds] = useState<string[]>([]);
   const [formsToPlan, setFormsToPlan] = useState<any[]>([]);
   const [formVersionsList, setFormVersionsList] = useState<any[]>([]);
+
+  // Add Reservation Modal State
+  const [isAddReservationOpen, setIsAddReservationOpen] = useState<boolean>(false);
+  const [newReservation, setNewReservation] = useState({ machine: 'Colaris 1', info: '', dates: [] as string[] });
+
+  // Add Machine Modal State
+  const [isAddMachineOpen, setIsAddMachineOpen] = useState<boolean>(false);
+  const [newMachineForm, setNewMachineForm] = useState({
+    name: '',
+    process: '',
+    setupTime: '',
+    efficiency: '',
+    type: 'Printing',
+    quantity: '',
+    speed: '',
+    border: false,
+    status: true,
+    schedule: {
+      Monday: { start: '', end: '' },
+      Tuesday: { start: '', end: '' },
+      Wednesday: { start: '', end: '' },
+      Thursday: { start: '', end: '' },
+      Friday: { start: '', end: '' },
+      Saturday: { start: '', end: '' },
+      Sunday: { start: '', end: '' }
+    },
+    exceptions: [] as { startDate: string, endDate: string, start: string, end: string }[]
+  });
 
   // Forms State (Mock from XML)
   const [formsList, setFormsList] = useState([
@@ -479,7 +509,7 @@ export default function App() {
             letterSpacing: '-0.05em',
             marginBottom: '4px'
           }}>
-            MERCURY FLOORING
+            PRODUCTION PLANNING
           </h1>
           <p style={{ color: '#94a3b8', fontSize: '1rem', fontWeight: 500 }}>
             Production Planning Control Center (Web-to-Print Microservice System)
@@ -581,7 +611,10 @@ export default function App() {
       {activeSection === 'rolls-out' && <RolloutPage />}
 
       {/* DASHBOARD LAYOUT GRID */}
-      {activeSection === 'dashboard' && <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '32px', marginBottom: '32px' }}>
+      {activeSection === 'dashboard' && <Dashboard user={currentUser} />}
+
+      {/* SIMULATORS LAYOUT GRID */}
+      {activeSection === 'simulators' && <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '32px', marginBottom: '32px' }}>
         
         {/* LEFT COLUMN: SIMULATORS & CONTROLS */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
@@ -1099,9 +1132,57 @@ export default function App() {
                       </td>
                       <td style={{ padding: '16px 12px', color: '#38bdf8', fontWeight: 600 }}>{form.formId}</td>
                       <td style={{ padding: '16px 12px' }}>
-                        <div style={{ width: '40px', height: '40px', background: 'linear-gradient(45deg, #1e293b, #334155)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                        </div>
+                        {form.id === '1' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form1.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form2.jpg" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '2' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form2-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form2-unit.jpg" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '3' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form3-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form3-unit.jpg" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '4' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form4-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form4-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '5' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form5-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form5-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '6' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form6-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form6-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '7' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form7-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form7-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '8' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form8-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form8-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '9' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form9-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form9-unit1.png" alt="Individual Form Orange" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form9-unit2.png" alt="Individual Form Blue" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : (
+                          <div style={{ width: '40px', height: '40px', background: 'linear-gradient(45deg, #1e293b, #334155)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                          </div>
+                        )}
                       </td>
                       <td style={{ padding: '16px 12px' }}>{form.quality}</td>
                       <td style={{ padding: '16px 12px' }}>{form.dimension}</td>
@@ -1244,9 +1325,57 @@ export default function App() {
                       <td style={{ padding: '16px 12px', color: '#38bdf8', fontWeight: 600 }}>{form.formId}</td>
                       <td style={{ padding: '16px 12px', color: '#10b981', fontWeight: 700 }}>{form.jobId}</td>
                       <td style={{ padding: '16px 12px' }}>
-                        <div style={{ width: '40px', height: '40px', background: 'linear-gradient(45deg, #1e293b, #334155)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                        </div>
+                        {form.id === '1' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form1.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form2.jpg" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '2' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form2-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form2-unit.jpg" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '3' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form3-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form3-unit.jpg" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '4' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form4-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form4-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '5' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form5-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form5-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '6' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form6-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form6-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '7' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form7-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form7-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '8' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form8-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form8-unit.png" alt="Individual Form" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : form.id === '9' ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <img src="/form9-layout.jpg" alt="Layout Sheet" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form9-unit1.png" alt="Individual Form Orange" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <img src="/form9-unit2.png" alt="Individual Form Blue" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                          </div>
+                        ) : (
+                          <div style={{ width: '40px', height: '40px', background: 'linear-gradient(45deg, #1e293b, #334155)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                          </div>
+                        )}
                       </td>
                       <td style={{ padding: '16px 12px' }}>{form.quality}</td>
                       <td style={{ padding: '16px 12px' }}>{form.dimension}</td>
@@ -1351,7 +1480,9 @@ export default function App() {
               {/* Top Bar */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: 'white' }}>Production Planning</h2>
-                <button style={{ 
+                <button 
+                  onClick={() => setIsAddReservationOpen(true)}
+                  style={{ 
                   background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                   color: 'white',
                   border: 'none',
@@ -1554,7 +1685,7 @@ export default function App() {
                       </tr>
                     </thead>
                     <tbody>
-                      {['Colaris 1', 'Colaris 2', 'ChromoJet 1'].map((machine, index) => (
+                      {['Colaris 1'].map((machine, index) => (
                         <tr key={index}>
                           <td style={{ padding: '16px', fontWeight: 600, color: '#94a3b8', borderRight: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'rgba(15,23,42,0.2)' }}>
                             {machine}
@@ -1579,6 +1710,126 @@ export default function App() {
 
               </div>
 
+              {/* Add Reservation Modal */}
+              {isAddReservationOpen && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div className="glass-panel" style={{ width: '800px', maxWidth: '90%', display: 'flex', flexDirection: 'column', gap: '20px', padding: '32px', background: 'rgba(15, 23, 42, 0.95)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <h2 style={{ fontSize: '1.4rem', fontWeight: 700, margin: 0, color: 'white' }}>Add reservation</h2>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                        <button 
+                          onClick={() => {
+                            setIsAddReservationOpen(false);
+                            setNewReservation({ machine: 'Colaris 1', info: '', dates: [] });
+                            setNotification({ message: 'Reservation saved to planning', type: 'success' });
+                          }}
+                          style={{ background: '#0ea5e9', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '6px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(14, 165, 233, 0.4)' }}
+                        >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                          Save
+                        </button>
+                        <button onClick={() => setIsAddReservationOpen(false)} style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}>
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', marginBottom: '8px', fontWeight: 600 }}>Machine <span style={{ color: '#ef4444' }}>*</span></label>
+                        <select 
+                          value={newReservation.machine}
+                          onChange={(e) => setNewReservation({...newReservation, machine: e.target.value})}
+                          style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '12px 14px', borderRadius: '8px', color: 'white', fontSize: '0.9rem' }}
+                        >
+                          <option value="Colaris 1" style={{ color: 'black' }}>Colaris 1</option>
+                          <option value="Colaris 2" style={{ color: 'black' }}>Colaris 2</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', marginBottom: '8px', fontWeight: 600 }}>Information of reservation <span style={{ color: '#ef4444' }}>*</span></label>
+                        <input 
+                          type="text" 
+                          value={newReservation.info}
+                          onChange={(e) => setNewReservation({...newReservation, info: e.target.value})}
+                          style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '12px 14px', borderRadius: '8px', color: 'white', fontSize: '0.9rem' }} 
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px', marginTop: '4px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                        <label style={{ fontSize: '0.9rem', color: '#cbd5e1', fontWeight: 600 }}>Reservation dates <span style={{ color: '#ef4444' }}>*</span></label>
+                        <button 
+                          onClick={() => {
+                            const newDate = new Date().toISOString().substring(0,10) + 'T10:00';
+                            setNewReservation({...newReservation, dates: [...newReservation.dates, newDate]});
+                          }}
+                          style={{ background: '#16a34a', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '6px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+                        >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                          Add date
+                        </button>
+                      </div>
+
+                      {newReservation.dates.length === 0 ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 0', opacity: 0.6 }}>
+                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                          <div style={{ marginTop: '12px', color: '#94a3b8', fontSize: '0.9rem' }}>No Data</div>
+                        </div>
+                      ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          {newReservation.dates.map((dateString, idx) => {
+                            const [datePart, timePart] = dateString.split('T');
+                            return (
+                            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '16px', background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                               <div style={{ flex: 1 }}>
+                                 <label style={{ display: 'block', fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '6px', fontWeight: 600 }}>Date</label>
+                                 <input 
+                                   type="date" 
+                                   value={datePart || ''} 
+                                   onChange={(e) => {
+                                     const newDates = [...newReservation.dates];
+                                     newDates[idx] = `${e.target.value}T${timePart || '00:00'}`;
+                                     setNewReservation({...newReservation, dates: newDates});
+                                   }}
+                                   style={{ width: '100%', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }} 
+                                 />
+                               </div>
+                               <div style={{ flex: 1 }}>
+                                 <label style={{ display: 'block', fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '6px', fontWeight: 600 }}>Heure</label>
+                                 <input 
+                                   type="time" 
+                                   value={timePart || ''} 
+                                   onChange={(e) => {
+                                     const newDates = [...newReservation.dates];
+                                     newDates[idx] = `${datePart || '2026-01-01'}T${e.target.value}`;
+                                     setNewReservation({...newReservation, dates: newDates});
+                                   }}
+                                   style={{ width: '100%', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }} 
+                                 />
+                               </div>
+                               <button 
+                                 onClick={() => {
+                                   const newDates = [...newReservation.dates];
+                                   newDates.splice(idx, 1);
+                                   setNewReservation({...newReservation, dates: newDates});
+                                 }}
+                                 style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', marginTop: '22px' }}
+                               >
+                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                               </button>
+                            </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
             </div>
           )}
 
@@ -1589,7 +1840,9 @@ export default function App() {
               {/* Top Bar */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: 'white' }}>Machines</h2>
-                <button style={{ 
+                <button 
+                  onClick={() => setIsAddMachineOpen(true)}
+                  style={{ 
                   background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
                   color: 'white', border: 'none', padding: '10px 20px', borderRadius: '8px', fontWeight: 700,
                   display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 4px 14px rgba(59, 130, 246, 0.4)', cursor: 'pointer'
@@ -1658,6 +1911,197 @@ export default function App() {
             </div>
           )}
 
+          {/* ── MODAL: ADD MACHINE ── */}
+          {isAddMachineOpen && (
+            <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '20px' }}>
+              <div className="glass-panel" style={{ width: '900px', maxWidth: '100%', maxHeight: '90vh', overflowY: 'auto', padding: '32px', background: 'rgba(15, 23, 42, 0.95)', animation: 'fadeIn 0.2s ease-out' }}>
+                
+                {/* Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                  <h2 style={{ fontSize: '1.4rem', fontWeight: 700, margin: 0, color: 'white' }}>Add new machine</h2>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <button 
+                      onClick={() => {
+                        setIsAddMachineOpen(false);
+                        setNotification({ message: 'Machine saved successfully', type: 'success' });
+                      }} 
+                      style={{ background: '#0ea5e9', color: 'white', border: 'none', padding: '8px 24px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 12px rgba(14, 165, 233, 0.4)', display: 'flex', alignItems: 'center', gap: '8px' }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                      Save
+                    </button>
+                    <button onClick={() => setIsAddMachineOpen(false)} style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer' }}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px', marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '1.1rem', color: 'white', margin: 0 }}>Machine info</h3>
+                </div>
+
+                {/* Row 1: Name */}
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', marginBottom: '8px', fontWeight: 600 }}>Name <span style={{ color: '#ef4444' }}>*</span></label>
+                  <input type="text" value={newMachineForm.name} onChange={e => setNewMachineForm({...newMachineForm, name: e.target.value})} style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                </div>
+
+                {/* Row 2: Process, Setup time, Efficiency */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', marginBottom: '8px', fontWeight: 600 }}>Process <span style={{ color: '#ef4444' }}>*</span></label>
+                    <select value={newMachineForm.process} onChange={e => setNewMachineForm({...newMachineForm, process: e.target.value})} style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }}>
+                      <option value="Form" style={{ color: 'black' }}>Form</option>
+                      <option value="Job" style={{ color: 'black' }}>Job</option>
+                      <option value="Both" style={{ color: 'black' }}>Both</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', marginBottom: '8px', fontWeight: 600 }}>Setup time <span style={{ color: '#ef4444' }}>*</span></label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <input type="number" value={newMachineForm.setupTime} onChange={e => setNewMachineForm({...newMachineForm, setupTime: e.target.value})} style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                      <span style={{ fontSize: '0.8rem', color: '#38bdf8', background: 'rgba(56, 189, 248, 0.1)', padding: '6px 8px', borderRadius: '4px', fontWeight: 600 }}>Minutes</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', marginBottom: '8px', fontWeight: 600 }}>Efficiency <span style={{ color: '#ef4444' }}>*</span></label>
+                    <input type="number" value={newMachineForm.efficiency} onChange={e => setNewMachineForm({...newMachineForm, efficiency: e.target.value})} style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                  </div>
+                </div>
+
+                {/* Row 3: Type, Quantity, Speed */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', marginBottom: '8px', fontWeight: 600 }}>Type <span style={{ color: '#ef4444' }}>*</span></label>
+                    <select value={newMachineForm.type} onChange={e => setNewMachineForm({...newMachineForm, type: e.target.value})} style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }}>
+                      <option value="Printing" style={{ color: 'black' }}>Printing</option>
+                      <option value="Sewing" style={{ color: 'black' }}>Sewing</option>
+                      <option value="Cutting" style={{ color: 'black' }}>Cutting</option>
+                      <option value="Coating" style={{ color: 'black' }}>Coating</option>
+                      <option value="Other" style={{ color: 'black' }}>Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', marginBottom: '8px', fontWeight: 600 }}>Quantity</label>
+                    <input type="number" value={newMachineForm.quantity} onChange={e => setNewMachineForm({...newMachineForm, quantity: e.target.value})} style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', color: '#cbd5e1', marginBottom: '8px', fontWeight: 600 }}>Speed (minutes/heure)</label>
+                    <input type="text" value={newMachineForm.speed} onChange={e => setNewMachineForm({...newMachineForm, speed: e.target.value})} style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                  </div>
+                </div>
+
+                {/* Row 4: Toggles */}
+                <div style={{ display: 'flex', gap: '32px', marginBottom: '32px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
+                    <div style={{ width: '40px', height: '24px', background: newMachineForm.status ? '#10b981' : 'rgba(255,255,255,0.2)', borderRadius: '12px', position: 'relative', transition: 'background 0.3s' }}>
+                      <div style={{ width: '18px', height: '18px', background: 'white', borderRadius: '50%', position: 'absolute', top: '3px', left: newMachineForm.status ? '19px' : '3px', transition: 'left 0.3s' }}></div>
+                    </div>
+                    <span style={{ fontSize: '0.9rem', color: 'white', fontWeight: 600 }}>Status</span>
+                    <input type="checkbox" checked={newMachineForm.status} onChange={e => setNewMachineForm({...newMachineForm, status: e.target.checked})} style={{ display: 'none' }} />
+                  </label>
+
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
+                    <div style={{ width: '40px', height: '24px', background: newMachineForm.border ? '#10b981' : 'rgba(255,255,255,0.2)', borderRadius: '12px', position: 'relative', transition: 'background 0.3s' }}>
+                      <div style={{ width: '18px', height: '18px', background: 'white', borderRadius: '50%', position: 'absolute', top: '3px', left: newMachineForm.border ? '19px' : '3px', transition: 'left 0.3s' }}></div>
+                    </div>
+                    <span style={{ fontSize: '0.9rem', color: 'white', fontWeight: 600 }}>Border (on/off)</span>
+                    <input type="checkbox" checked={newMachineForm.border} onChange={e => setNewMachineForm({...newMachineForm, border: e.target.checked})} style={{ display: 'none' }} />
+                  </label>
+                </div>
+
+                {/* Standard Schedule */}
+                <div style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px', marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '1.1rem', color: 'white', margin: 0 }}>Standard Schedule <span style={{ color: '#ef4444' }}>*</span></h3>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
+                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                    <div key={day} style={{ display: 'grid', gridTemplateColumns: '120px 1fr 1fr', gap: '24px', alignItems: 'center' }}>
+                      <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#e2e8f0' }}>{day}</div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '6px', fontWeight: 600 }}>Select start time <span style={{ color: '#ef4444' }}>*</span></label>
+                        <input type="time" value={(newMachineForm.schedule as any)[day].start} onChange={e => setNewMachineForm({...newMachineForm, schedule: {...newMachineForm.schedule, [day]: {...(newMachineForm.schedule as any)[day], start: e.target.value}}})} style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '6px', fontWeight: 600 }}>Select end time <span style={{ color: '#ef4444' }}>*</span></label>
+                        <input type="time" value={(newMachineForm.schedule as any)[day].end} onChange={e => setNewMachineForm({...newMachineForm, schedule: {...newMachineForm.schedule, [day]: {...(newMachineForm.schedule as any)[day], end: e.target.value}}})} style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px 14px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Schedule Exception */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px', marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '1.1rem', color: 'white', margin: 0 }}>Schedule exception</h3>
+                  <button 
+                    onClick={() => {
+                      setNewMachineForm({...newMachineForm, exceptions: [...newMachineForm.exceptions, { startDate: '', endDate: '', start: '', end: '' }]});
+                    }}
+                    style={{ background: '#16a34a', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '6px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Add new exception
+                  </button>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {newMachineForm.exceptions.map((exc, idx) => (
+                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '16px', background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                      <div style={{ color: '#94a3b8', fontWeight: 600, fontSize: '0.9rem' }}>{String(idx + 1).padStart(2, '0')}.</div>
+                      <div style={{ flex: 1, display: 'flex', gap: '12px' }}>
+                        <div style={{ flex: 1 }}>
+                          <label style={{ display: 'block', fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '6px', fontWeight: 600 }}>Start date <span style={{ color: '#ef4444' }}>*</span></label>
+                          <input type="date" value={exc.startDate} onChange={e => {
+                            const newExcs = [...newMachineForm.exceptions];
+                            newExcs[idx].startDate = e.target.value;
+                            setNewMachineForm({...newMachineForm, exceptions: newExcs});
+                          }} style={{ width: '100%', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', marginTop: '22px', color: '#94a3b8' }}>~</div>
+                        <div style={{ flex: 1 }}>
+                          <label style={{ display: 'block', fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '6px', fontWeight: 600 }}>Expiration date</label>
+                          <input type="date" value={exc.endDate} onChange={e => {
+                            const newExcs = [...newMachineForm.exceptions];
+                            newExcs[idx].endDate = e.target.value;
+                            setNewMachineForm({...newMachineForm, exceptions: newExcs});
+                          }} style={{ width: '100%', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                        </div>
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <label style={{ display: 'block', fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '6px', fontWeight: 600 }}>Select start time <span style={{ color: '#ef4444' }}>*</span></label>
+                        <input type="time" value={exc.start} onChange={e => {
+                          const newExcs = [...newMachineForm.exceptions];
+                          newExcs[idx].start = e.target.value;
+                          setNewMachineForm({...newMachineForm, exceptions: newExcs});
+                        }} style={{ width: '100%', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <label style={{ display: 'block', fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '6px', fontWeight: 600 }}>Select end time <span style={{ color: '#ef4444' }}>*</span></label>
+                        <input type="time" value={exc.end} onChange={e => {
+                          const newExcs = [...newMachineForm.exceptions];
+                          newExcs[idx].end = e.target.value;
+                          setNewMachineForm({...newMachineForm, exceptions: newExcs});
+                        }} style={{ width: '100%', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px', color: 'white', outline: 'none' }} />
+                      </div>
+                      <button 
+                        onClick={() => {
+                          const newExcs = [...newMachineForm.exceptions];
+                          newExcs.splice(idx, 1);
+                          setNewMachineForm({...newMachineForm, exceptions: newExcs});
+                        }}
+                        style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', marginTop: '22px', padding: '8px' }}
+                      >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+              </div>
+            </div>
+          )}
+
           {/* ── MODAL: EDIT MACHINE ── */}
           {editingMachine && (
             <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
@@ -1698,8 +2142,11 @@ export default function App() {
             </div>
           )}
 
+          {/* ── SECTION: rolls-in ── */}
+          {activeSection === 'rolls-in' && <RollsInPage />}
+
           {/* ── SECTION: placeholder pages ── */}
-          {(['rolls-in','rolls-out','job-results','coating-in','coating-out'] as Section[]).includes(activeSection) && (
+          {(['rolls-out','job-results','coating-in','coating-out', 'error', 'reprint', 'packaging'] as Section[]).includes(activeSection) && (
             <div className="glass-panel" style={{ textAlign: 'center', padding: '80px 40px' }}>
               <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🚧</div>
               <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'white', marginBottom: '10px' }}>

@@ -1,4 +1,4 @@
-package com.elavi.productionplanning.shared.repository.sync;
+﻿package com.elavi.productionplanning.shared.repository.sync;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.Instant;
@@ -145,7 +144,7 @@ public class MetaboardSyncService {
             }
         }
 
-        // Extract quality from XML (optional attribute) â€” fallback to "0600" (Patio/Standard)
+        // Extract quality from XML (optional attribute) Ã¢â‚¬â€ fallback to "0600" (Patio/Standard)
         String quality = layoutElement.getAttribute("Quality");
         if (quality == null || quality.isBlank()) {
             quality = layoutElement.getAttribute("Grade"); // Often stored as Grade in Metaboard
@@ -315,7 +314,7 @@ public class MetaboardSyncService {
      * For mock/dev purposes, we use a sensible default.
      */
     private String guessQualityFromFormNumber(String formNumber) {
-        // Could be extended with lookup logic; default is Patio (0600) â€” standard workflow
+        // Could be extended with lookup logic; default is Patio (0600) Ã¢â‚¬â€ standard workflow
         return "0600";
     }
 }

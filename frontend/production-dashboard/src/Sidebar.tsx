@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 export type Section =
   | 'dashboard'
+  | 'simulators'
   | 'planning'
   | 'machines'
   | 'forms'
@@ -12,7 +13,10 @@ export type Section =
   | 'job-results'
   | 'coating-in'
   | 'coating-out'
-  | 'order-items';
+  | 'order-items'
+  | 'error'
+  | 'reprint'
+  | 'packaging';
 
 interface SidebarProps {
   activeSection: Section;
@@ -32,6 +36,9 @@ const PRODUCTION_ITEMS: { id: Section; label: string }[] = [
   { id: 'job-results',   label: 'Job-results' },
   { id: 'coating-in',    label: 'Coating In' },
   { id: 'coating-out',   label: 'Coating Out' },
+  { id: 'error',         label: 'Error' },
+  { id: 'reprint',       label: 'Reprint' },
+  { id: 'packaging',     label: 'Packaging' },
 ];
 
 export default function Sidebar({ activeSection, onSelect, onLogout, user }: SidebarProps) {
@@ -72,9 +79,9 @@ export default function Sidebar({ activeSection, onSelect, onLogout, user }: Sid
               fontSize: '0.82rem', fontWeight: 800, letterSpacing: '0.1em',
               background: 'linear-gradient(135deg, #60a5fa 0%, #8b5cf6 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
-            }}>MERCURY</div>
+            }}>PRODUCTION</div>
             <div style={{ fontSize: '0.66rem', color: '#334155', fontWeight: 600, letterSpacing: '0.08em' }}>
-              FLOORING
+              PLANNING
             </div>
           </div>
         </div>
@@ -83,7 +90,7 @@ export default function Sidebar({ activeSection, onSelect, onLogout, user }: Sid
       {/* ── Navigation ───────────────────────────────── */}
       <nav style={{ flex: 1, padding: '12px 10px' }}>
 
-        {/* Dashboard */}
+        {/* Dashboard & Simulators */}
         <div style={{ marginBottom: '4px' }}>
           <div style={{
             fontSize: '0.65rem', fontWeight: 700, color: '#334155',
@@ -92,9 +99,13 @@ export default function Sidebar({ activeSection, onSelect, onLogout, user }: Sid
 
           <NavItem
             label="Dashboard"
-            icon="📊"
             isActive={activeSection === 'dashboard'}
             onClick={() => onSelect('dashboard')}
+          />
+          <NavItem
+            label="Simulators"
+            isActive={activeSection === 'simulators'}
+            onClick={() => onSelect('simulators')}
           />
         </div>
 
@@ -119,7 +130,6 @@ export default function Sidebar({ activeSection, onSelect, onLogout, user }: Sid
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '15px' }}>🏗️</span>
               <span style={{
                 fontSize: '0.78rem', fontWeight: 700,
                 color: isProductionSection ? '#60a5fa' : '#94a3b8',

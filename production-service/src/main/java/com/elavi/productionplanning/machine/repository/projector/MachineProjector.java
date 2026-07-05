@@ -1,11 +1,10 @@
-package com.elavi.productionplanning.machine.repository.projector;
+﻿package com.elavi.productionplanning.machine.repository.projector;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import com.elavi.productionplanning.machine.repository.readmodel.MachineView;
 import com.elavi.productionplanning.machine.repository.readmodel.MachineViewRepository;
 import com.elavi.productionplanning.machine.domain.event.MachineEvents.MachineCreatedEvent;
