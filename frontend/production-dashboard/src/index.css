@@ -5,31 +5,43 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
-  color: #e2e8f0;
-  background-color: #0b0f19;
+  color-scheme: light;
+  color: #0f172a; /* slate-900 */
+  background-color: #f8fafc;
+
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
 
   /* HSL Tailored Colors */
-  --primary-hue: 217;
+  --primary-hue: 270;
   --primary-sat: 91%;
-  --primary-light: 60%;
+  --primary-light: 75%;
   --primary: hsl(var(--primary-hue), var(--primary-sat), var(--primary-light));
-  --primary-glow: hsla(var(--primary-hue), var(--primary-sat), var(--primary-light), 0.15);
+  --primary-glow: hsla(var(--primary-hue), var(--primary-sat), var(--primary-light), 0.25);
   
   --secondary: #ec4899;
-  --secondary-glow: rgba(236, 72, 153, 0.15);
+  --secondary-glow: rgba(236, 72, 153, 0.25);
   
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
   --info: #06b6d4;
 
-  --bg-gradient: radial-gradient(circle at 50% 0%, #151e33 0%, #0b0f19 80%);
-  --panel-bg: rgba(30, 41, 59, 0.5);
-  --panel-border: rgba(255, 255, 255, 0.08);
-  --input-bg: rgba(15, 23, 42, 0.6);
-  --input-border: rgba(255, 255, 255, 0.1);
-  --input-focus: hsl(var(--primary-hue), var(--primary-sat), var(--primary-light));
+  --bg-gradient: #f8fafc;
+  --panel-bg: #ffffff;
+  --panel-border: rgba(0, 0, 0, 0.05);
+  --panel-border-hover: rgba(0, 0, 0, 0.1);
+  --panel-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --panel-shadow-hover: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --input-focus: #0ea5e9;
+  
+  --surface-bg: #ffffff;
+  --surface-border: #e5e7eb;
+  --surface-border-active: #cbd5e1;
 }
 
 * {
@@ -51,55 +63,52 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.3);
+  background: rgba(0, 0, 0, 0.03);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 /* Base Classes */
 .glass-panel {
   background: var(--panel-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--panel-border);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  box-shadow: var(--panel-shadow);
   padding: 24px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
 }
 
 .glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  border-color: var(--panel-border-hover);
+  box-shadow: var(--panel-shadow-hover);
 }
 
 /* Interactive Elements */
 button {
-  background: linear-gradient(135deg, var(--primary) 0%, hsl(var(--primary-hue), var(--primary-sat), 48%) 100%);
+  background: #0ea5e9;
   color: white;
   border: none;
-  padding: 12px 24px;
-  font-size: 0.95rem;
+  padding: 10px 20px;
+  font-size: 0.9rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 4px 14px 0 var(--primary-glow);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-family: inherit;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px 0 var(--primary-glow);
-  filter: brightness(1.1);
+  background: #0284c7;
 }
 
 button:active {
@@ -107,23 +116,23 @@ button:active {
 }
 
 button:disabled {
-  background: #334155;
-  color: #64748b;
+  background: #cbd5e1;
+  color: #94a3b8;
   box-shadow: none;
   cursor: not-allowed;
   transform: none;
 }
 
 button.secondary {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.02);
   border: 1px solid var(--input-border);
-  color: #e2e8f0;
+  color: var(--text-primary);
   box-shadow: none;
 }
 
 button.secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Form inputs */
@@ -133,7 +142,7 @@ input, select {
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   border-radius: 8px;
-  color: white;
+  color: var(--text-primary);
   font-family: inherit;
   font-size: 0.95rem;
   transition: all 0.2s ease;

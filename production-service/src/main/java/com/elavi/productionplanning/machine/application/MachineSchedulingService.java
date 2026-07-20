@@ -5,12 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import com.elavi.productionplanning.job.domain.Job;
 import com.elavi.productionplanning.machine.domain.Machine;
 import com.elavi.productionplanning.shared.AggregateStore;
 import com.elavi.productionplanning.shared.domain.ReservationChecker;
 import com.elavi.productionplanning.shared.domain.service.WorkingHoursService;
-import com.elavi.productionplanning.machine.domain.event.MachineEvents.MachineReservedEvent;
 
 /**
  * Application Service â€” encapsulates the scheduling algorithm for machines.

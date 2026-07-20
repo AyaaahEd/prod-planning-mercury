@@ -3,8 +3,6 @@ package com.elavi.productionplanning.machine.domain.event;
 import lombok.*;
 
 import java.time.Instant;
-import com.elavi.productionplanning.machine.domain.Machine;
-import com.elavi.productionplanning.machine.domain.valueobject.MachineSpeedConfig;
 import com.elavi.productionplanning.shared.DomainEvent;
 
 public class MachineEvents {

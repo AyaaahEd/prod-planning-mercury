@@ -117,7 +117,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'radial-gradient(ellipse at 50% 0%, #1a1f3e 0%, #0b0f19 60%)',
+      background: 'var(--bg-gradient)',
       padding: '24px',
       position: 'relative',
       overflow: 'hidden'
@@ -159,35 +159,35 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             justifyContent: 'center',
             width: '80px', height: '80px',
             borderRadius: '22px',
-            background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-            boxShadow: '0 12px 40px rgba(59,130,246,0.45)',
+            background: '#0ea5e9',
+            boxShadow: '0 4px 12px rgba(14, 165, 233, 0.3)',
             marginBottom: '22px',
-            fontSize: '36px'
+            fontSize: '36px',
+            color: 'white',
+            fontWeight: 'bold'
           }}>
-            🏭
+            M
           </div>
           <h1 style={{
             fontSize: '2.4rem',
             fontWeight: 800,
-            background: 'linear-gradient(135deg, #60a5fa 0%, #ec4899 50%, #8b5cf6 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            letterSpacing: '-0.04em',
+            color: 'var(--text-primary)',
+            letterSpacing: '-0.02em',
             marginBottom: '8px'
           }}>
             PRODUCTION PLANNING
           </h1>
-          <p style={{ color: '#64748b', fontSize: '1rem', fontWeight: 500 }}>
+          <p style={{ color: 'var(--text-tertiary)', fontSize: '1rem', fontWeight: 500 }}>
             Production Planning Control Center
           </p>
         </div>
 
         {/* Card */}
         <div style={{
-          background: 'rgba(30, 41, 59, 0.6)',
+          background: 'var(--panel-bg)',
           backdropFilter: 'blur(24px)',
           WebkitBackdropFilter: 'blur(24px)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          border: '1px solid rgba(0, 0, 0,0.08)',
           borderRadius: '28px',
           padding: '52px 52px',
           boxShadow: '0 32px 100px rgba(0,0,0,0.55)'
@@ -196,11 +196,11 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
           {/* Tab Toggle */}
           <div style={{
             display: 'flex',
-            background: 'rgba(15,23,42,0.6)',
+            background: 'var(--surface-bg)',
             borderRadius: '12px',
             padding: '4px',
             marginBottom: '32px',
-            border: '1px solid rgba(255,255,255,0.06)'
+            border: '1px solid rgba(0, 0, 0,0.06)'
           }}>
             {(['login', 'register'] as const).map(m => (
               <button
@@ -217,10 +217,10 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   fontWeight: 600,
                   transition: 'all 0.25s ease',
                   background: mode === m
-                    ? 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)'
+                    ? '#0ea5e9'
                     : 'transparent',
                   color: mode === m ? 'white' : '#64748b',
-                  boxShadow: mode === m ? '0 4px 12px rgba(59,130,246,0.3)' : 'none',
+                  boxShadow: mode === m ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
                   transform: 'none'
                 }}
               >
@@ -231,10 +231,10 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
 
           {/* Title */}
           <div style={{ marginBottom: '32px' }}>
-            <h2 style={{ fontSize: '1.65rem', fontWeight: 700, color: 'white', marginBottom: '8px' }}>
+            <h2 style={{ fontSize: '1.65rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
               {mode === 'login' ? 'Bon retour 👋' : 'Créer votre compte'}
             </h2>
-            <p style={{ fontSize: '0.9rem', color: '#64748b' }}>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-tertiary)' }}>
               {mode === 'login'
                 ? 'Connectez-vous pour accéder au tableau de bord de production.'
                 : 'Inscrivez-vous pour rejoindre l\'équipe de production.'}
@@ -249,7 +249,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               <div style={{ animation: 'fadeInUp 0.3s ease' }}>
                 <label style={{
                   display: 'block', fontSize: '0.78rem', fontWeight: 700,
-                  color: '#94a3b8', marginBottom: '8px', letterSpacing: '0.06em', textTransform: 'uppercase'
+                  color: 'var(--text-secondary)', marginBottom: '8px', letterSpacing: '0.06em', textTransform: 'uppercase'
                 }}>
                   Nom complet
                 </label>
@@ -275,7 +275,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             <div>
               <label style={{
                 display: 'block', fontSize: '0.78rem', fontWeight: 700,
-                color: '#94a3b8', marginBottom: '8px', letterSpacing: '0.06em', textTransform: 'uppercase'
+                color: 'var(--text-secondary)', marginBottom: '8px', letterSpacing: '0.06em', textTransform: 'uppercase'
               }}>
                 Adresse email
               </label>
@@ -300,7 +300,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             <div>
               <label style={{
                 display: 'block', fontSize: '0.78rem', fontWeight: 700,
-                color: '#94a3b8', marginBottom: '8px', letterSpacing: '0.06em', textTransform: 'uppercase'
+                color: 'var(--text-secondary)', marginBottom: '8px', letterSpacing: '0.06em', textTransform: 'uppercase'
               }}>
                 Mot de passe
               </label>
@@ -325,7 +325,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   style={{
                     position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
                     background: 'transparent', border: 'none', padding: '4px', boxShadow: 'none',
-                    color: '#64748b', cursor: 'pointer', fontSize: '16px', width: 'auto'
+                    color: 'var(--text-tertiary)', cursor: 'pointer', fontSize: '16px', width: 'auto'
                   }}
                 >
                   {showPassword ? '🙈' : '👁️'}
@@ -338,7 +338,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               <div style={{ animation: 'fadeInUp 0.3s ease' }}>
                 <label style={{
                   display: 'block', fontSize: '0.78rem', fontWeight: 700,
-                  color: '#94a3b8', marginBottom: '8px', letterSpacing: '0.06em', textTransform: 'uppercase'
+                  color: 'var(--text-secondary)', marginBottom: '8px', letterSpacing: '0.06em', textTransform: 'uppercase'
                 }}>
                   Confirmer le mot de passe
                 </label>
@@ -395,9 +395,9 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                 fontWeight: 700,
                 justifyContent: 'center',
                 background: isLoading
-                  ? '#334155'
-                  : 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-                boxShadow: isLoading ? 'none' : '0 8px 24px rgba(59,130,246,0.4)',
+                  ? '#cbd5e1'
+                  : '#0ea5e9',
+                boxShadow: isLoading ? 'none' : '0 1px 3px rgba(0,0,0,0.1)',
                 borderRadius: '12px',
                 gap: '10px',
                 letterSpacing: '0.02em'
@@ -426,7 +426,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
           {/* Switch mode link */}
           <p style={{
             textAlign: 'center', marginTop: '24px',
-            fontSize: '0.85rem', color: '#64748b'
+            fontSize: '0.85rem', color: 'var(--text-tertiary)'
           }}>
             {mode === 'login' ? "Pas encore de compte ?" : "Déjà un compte ?"}
             {' '}
@@ -446,7 +446,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         </div>
 
         {/* Footer */}
-        <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '0.75rem', color: '#334155' }}>
+        <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '0.75rem', color: '#cbd5e1' }}>
           Mercury Flooring © {new Date().getFullYear()} — Production Management System
         </p>
       </div>

@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import com.elavi.productionplanning.job.domain.Job;
 import com.elavi.productionplanning.jobpalette.domain.JobPalette;
 import com.elavi.productionplanning.machine.domain.valueobject.MachineStep;
 import com.elavi.productionplanning.shared.AggregateStore;

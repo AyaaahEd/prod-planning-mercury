@@ -1,4 +1,4 @@
-﻿package com.elavi.productionplanning.jobpalette.repository.readmodel;
+package com.elavi.productionplanning.jobpalette.repository.readmodel;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.time.Instant;
 import java.util.List;
-import com.elavi.productionplanning.job.domain.Job;
 import com.elavi.productionplanning.machine.domain.valueobject.MachineStep;
 import com.elavi.productionplanning.shared.DomainEvent;
 

@@ -5,7 +5,6 @@ import lombok.*;
 import java.time.Instant;
 import java.util.List;
 import com.elavi.productionplanning.machine.domain.valueobject.MachineStep;
-import com.elavi.productionplanning.orderitem.domain.OrderItem;
 import com.elavi.productionplanning.shared.DomainEvent;
 
 public class OrderItemEvents {

@@ -15,7 +15,6 @@ public class WorkingHoursService {
     private static final ZoneId ZONE = ZoneId.of("Europe/Brussels");
     private static final int WORK_START_HOUR = 8;
     private static final int WORK_END_HOUR = 17;
-    private static final int WORK_HOURS_PER_DAY = WORK_END_HOUR - WORK_START_HOUR;
 
     private final Set<String> holidays = new HashSet<>(); // Format: "YYYY-MM-DD"
 

@@ -1,4 +1,4 @@
-﻿package com.elavi.productionplanning.shared.repository.sync;
+package com.elavi.productionplanning.shared.repository.sync;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class MetaboardSyncService {
 
     private final AggregateStore aggregateStore;
     private final WorkflowConfig workflowConfig;
-    private final com.elavi.productionplanning.shared.domain.service.WorkingHoursService workingHoursService;
+    private final WorkingHoursService workingHoursService;
 
     @Value("${metaboard.ftp.inbound-path}")
     private String inboundPath;

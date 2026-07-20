@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import com.elavi.productionplanning.form.repository.readmodel.FormView;
 import com.elavi.productionplanning.form.repository.readmodel.FormViewRepository;
-import com.elavi.productionplanning.shared.application.RollSizeCalculator;
 import com.elavi.productionplanning.shared.repository.readmodel.PlacedObjectView;
 import com.elavi.productionplanning.form.domain.event.FormEvents.FormCreatedEvent;
 import com.elavi.productionplanning.form.domain.event.FormEvents.FormStatusUpdatedEvent;

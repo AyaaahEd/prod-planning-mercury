@@ -3,9 +3,7 @@ package com.elavi.productionplanning.machine.domain;
 import lombok.Getter;
 
 import java.time.Instant;
-import com.elavi.productionplanning.machine.application.MachineSchedulingService;
 import com.elavi.productionplanning.machine.domain.valueobject.MachineSpeedConfig;
-import com.elavi.productionplanning.machine.repository.projector.MachineReservationProjector;
 import com.elavi.productionplanning.shared.AggregateRoot;
 import com.elavi.productionplanning.shared.DomainEvent;
 import com.elavi.productionplanning.machine.domain.event.MachineEvents.MachineCreatedEvent;
@@ -72,7 +70,7 @@ public class Machine extends AggregateRoot {
             this.name = e.getName();
             this.type = e.getType();
             this.speedConfig = e.getSpeedConfig(); // âœ… FIX Bug 1: restored on replay
-        } else if (event instanceof MachineReservedEvent e) {
+        } else if (event instanceof MachineReservedEvent) {
             // Reservation slots are tracked by MachineReservationProjector in MongoDB.
             // Nothing to store on the in-memory aggregate itself.
         }

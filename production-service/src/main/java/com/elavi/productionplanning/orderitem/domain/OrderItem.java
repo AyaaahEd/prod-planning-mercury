@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.elavi.productionplanning.machine.domain.valueobject.MachineStep;
 import com.elavi.productionplanning.shared.AggregateRoot;
-import com.elavi.productionplanning.shared.domain.service.WorkingHoursService;
 import com.elavi.productionplanning.shared.DomainEvent;
 import com.elavi.productionplanning.orderitem.domain.event.OrderItemEvents.OrderItemCreatedEvent;
 import com.elavi.productionplanning.orderitem.domain.event.OrderItemEvents.OrderItemPromiseDateCalculatedEvent;

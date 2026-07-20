@@ -3,7 +3,6 @@ package com.elavi.productionplanning.rollin.domain.event;
 import lombok.*;
 
 import java.time.Instant;
-import com.elavi.productionplanning.rollin.domain.RollIn;
 import com.elavi.productionplanning.shared.DomainEvent;
 
 public class RollInEvents {

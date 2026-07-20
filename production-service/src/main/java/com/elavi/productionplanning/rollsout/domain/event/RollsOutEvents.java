@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.time.Instant;
 import java.util.List;
-import com.elavi.productionplanning.rollsout.domain.RollsOut;
 import com.elavi.productionplanning.shared.DomainEvent;
 
 public class RollsOutEvents {

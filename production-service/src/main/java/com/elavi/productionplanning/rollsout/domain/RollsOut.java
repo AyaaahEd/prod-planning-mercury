@@ -65,9 +65,9 @@ public class RollsOut extends AggregateRoot {
             this.quality = e.getQuality();
             this.repetitions = e.getRepetitions();
             this.status = e.getStatus();
-        } else if (event instanceof RollsOutStartedEvent e) {
+        } else if (event instanceof RollsOutStartedEvent) {
             this.status = "STARTED";
-        } else if (event instanceof RollsOutEndedEvent e) {
+        } else if (event instanceof RollsOutEndedEvent) {
             this.status = "ENDED";
         }
     }

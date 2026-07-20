@@ -1,8 +1,6 @@
-import { useState } from 'react';
 
 export type Section =
   | 'dashboard'
-  | 'simulators'
   | 'planning'
   | 'machines'
   | 'forms'
@@ -11,8 +9,6 @@ export type Section =
   | 'rolls-out'
   | 'jobs'
   | 'job-results'
-  | 'coating-in'
-  | 'coating-out'
   | 'order-items'
   | 'error'
   | 'reprint'
@@ -25,7 +21,8 @@ interface SidebarProps {
   user: { name: string; email: string };
 }
 
-const PRODUCTION_ITEMS: { id: Section; label: string }[] = [
+const MENU_ITEMS: { id: Section; label: string }[] = [
+  { id: 'dashboard',     label: 'Dashboard' },
   { id: 'planning',      label: 'Planning' },
   { id: 'machines',      label: 'Machines' },
   { id: 'forms',         label: 'Forms' },
@@ -33,28 +30,22 @@ const PRODUCTION_ITEMS: { id: Section; label: string }[] = [
   { id: 'rolls-in',      label: 'Rolls In' },
   { id: 'rolls-out',     label: 'Rolls Out' },
   { id: 'jobs',          label: 'Jobs' },
-  { id: 'job-results',   label: 'Job-results' },
-  { id: 'coating-in',    label: 'Coating In' },
-  { id: 'coating-out',   label: 'Coating Out' },
+  { id: 'job-results',   label: 'Job Results' },
   { id: 'error',         label: 'Error' },
   { id: 'reprint',       label: 'Reprint' },
   { id: 'packaging',     label: 'Packaging' },
 ];
 
 export default function Sidebar({ activeSection, onSelect, onLogout, user }: SidebarProps) {
-  const [productionOpen, setProductionOpen] = useState(true);
-
-  const isProductionSection = PRODUCTION_ITEMS.some(i => i.id === activeSection);
-
   return (
     <aside style={{
-      width: '240px',
-      minWidth: '240px',
+      width: '260px',
+      minWidth: '260px',
       height: '100vh',
       display: 'flex',
       flexDirection: 'column',
-      background: 'rgba(10, 14, 26, 0.97)',
-      borderRight: '1px solid rgba(255,255,255,0.06)',
+      background: '#ffffff',
+      borderRight: '1px solid #e5e7eb',
       position: 'sticky',
       top: 0,
       overflowY: 'auto',
@@ -63,131 +54,58 @@ export default function Sidebar({ activeSection, onSelect, onLogout, user }: Sid
 
       {/* ── Logo ─────────────────────────────────────── */}
       <div style={{
-        padding: '24px 20px 20px',
-        borderBottom: '1px solid rgba(255,255,255,0.06)'
+        padding: '24px 24px',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '11px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: '38px', height: '38px', borderRadius: '11px',
-            background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+            width: '36px', height: '36px', borderRadius: '8px',
+            background: '#0ea5e9', color: 'white',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: '18px', flexShrink: 0,
-            boxShadow: '0 4px 14px rgba(59,130,246,0.4)'
+            boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
           }}>🏭</div>
           <div>
             <div style={{
-              fontSize: '0.82rem', fontWeight: 800, letterSpacing: '0.1em',
-              background: 'linear-gradient(135deg, #60a5fa 0%, #8b5cf6 100%)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
+              fontSize: '1rem', fontWeight: 800, letterSpacing: '0.05em',
+              color: '#0f172a'
             }}>PRODUCTION</div>
-            <div style={{ fontSize: '0.66rem', color: '#334155', fontWeight: 600, letterSpacing: '0.08em' }}>
-              PLANNING
-            </div>
           </div>
         </div>
       </div>
 
       {/* ── Navigation ───────────────────────────────── */}
-      <nav style={{ flex: 1, padding: '12px 10px' }}>
-
-        {/* Dashboard & Simulators */}
-        <div style={{ marginBottom: '4px' }}>
-          <div style={{
-            fontSize: '0.65rem', fontWeight: 700, color: '#334155',
-            letterSpacing: '0.1em', padding: '8px 10px 4px'
-          }}>MENU</div>
-
+      <nav style={{ flex: 1, padding: '0 16px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+        {MENU_ITEMS.map(item => (
           <NavItem
-            label="Dashboard"
-            isActive={activeSection === 'dashboard'}
-            onClick={() => onSelect('dashboard')}
+            key={item.id}
+            label={item.label}
+            isActive={activeSection === item.id}
+            onClick={() => onSelect(item.id)}
           />
-          <NavItem
-            label="Simulators"
-            isActive={activeSection === 'simulators'}
-            onClick={() => onSelect('simulators')}
-          />
-        </div>
-
-        {/* Production Planning group */}
-        <div style={{ marginTop: '8px' }}>
-          {/* Group header — clickable to collapse */}
-          <button
-            onClick={() => setProductionOpen(o => !o)}
-            style={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '8px 10px 6px',
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
-              boxShadow: 'none',
-              transform: 'none',
-              borderRadius: '8px',
-              transition: 'background 0.2s',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{
-                fontSize: '0.78rem', fontWeight: 700,
-                color: isProductionSection ? '#60a5fa' : '#94a3b8',
-                letterSpacing: '0.03em'
-              }}>
-                Production Planning
-              </span>
-            </div>
-            <span style={{
-              fontSize: '10px',
-              color: '#475569',
-              transition: 'transform 0.2s',
-              display: 'inline-block',
-              transform: productionOpen ? 'rotate(0deg)' : 'rotate(-90deg)'
-            }}>▼</span>
-          </button>
-
-          {/* Sub-items */}
-          {productionOpen && (
-            <div style={{ paddingLeft: '12px' }}>
-              {PRODUCTION_ITEMS.map(item => (
-                <NavItem
-                  key={item.id}
-                  label={item.label}
-                  isActive={activeSection === item.id}
-                  onClick={() => onSelect(item.id)}
-                  sub
-                />
-              ))}
-            </div>
-          )}
-        </div>
+        ))}
       </nav>
 
       {/* ── User ─────────────────────────────────────── */}
       <div style={{
-        padding: '12px 10px',
-        borderTop: '1px solid rgba(255,255,255,0.06)'
+        padding: '16px',
+        borderTop: '1px solid #e5e7eb'
       }}>
         <div style={{
-          display: 'flex', alignItems: 'center', gap: '10px',
-          padding: '10px', borderRadius: '11px',
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.05)'
+          display: 'flex', alignItems: 'center', gap: '12px',
         }}>
           <div style={{
-            width: '34px', height: '34px', borderRadius: '50%',
-            background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+            width: '36px', height: '36px', borderRadius: '50%',
+            background: '#f1f5f9',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '0.85rem', fontWeight: 800, color: 'white', flexShrink: 0
+            fontSize: '0.9rem', fontWeight: 600, color: '#475569', flexShrink: 0
           }}>
             {user.name.charAt(0).toUpperCase()}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {user.name}
             </div>
-            <div style={{ fontSize: '0.68rem', color: '#475569', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div style={{ fontSize: '0.75rem', color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {user.email}
             </div>
           </div>
@@ -195,12 +113,22 @@ export default function Sidebar({ activeSection, onSelect, onLogout, user }: Sid
             onClick={onLogout}
             title="Déconnexion"
             style={{
-              background: 'transparent', border: '1px solid rgba(239,68,68,0.25)',
-              color: '#ef4444', padding: '5px 7px', borderRadius: '7px',
-              fontSize: '13px', boxShadow: 'none', cursor: 'pointer',
-              flexShrink: 0, width: 'auto', transform: 'none'
+              background: 'transparent', border: 'none',
+              color: '#94a3b8', padding: '8px', borderRadius: '6px',
+              cursor: 'pointer', flexShrink: 0, width: 'auto', transform: 'none',
+              display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}
-          >⏻</button>
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = '#fee2e2';
+              e.currentTarget.style.color = '#ef4444';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = '#94a3b8';
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          </button>
         </div>
       </div>
     </aside>
@@ -208,48 +136,44 @@ export default function Sidebar({ activeSection, onSelect, onLogout, user }: Sid
 }
 
 /* ── Reusable nav item ────────────────────────────────────────────────────── */
-function NavItem({ label, icon, isActive, onClick, sub }: {
+function NavItem({ label, isActive, onClick }: {
   label: string;
-  icon?: string;
   isActive: boolean;
   onClick: () => void;
-  sub?: boolean;
 }) {
   return (
     <button
       onClick={onClick}
       style={{
         width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '9px',
-        padding: sub ? '8px 10px' : '9px 10px',
+        display: 'block',
+        padding: '8px 16px',
         border: 'none',
         cursor: 'pointer',
-        fontSize: sub ? '0.855rem' : '0.875rem',
-        fontWeight: isActive ? 700 : 400,
+        fontSize: '0.875rem',
+        fontWeight: isActive ? 600 : 500,
         textAlign: 'left',
-        transition: 'all 0.15s ease',
-        background: isActive
-          ? 'rgba(59,130,246,0.15)'
-          : 'transparent',
-        color: isActive ? '#93c5fd' : '#64748b',
-        borderLeft: isActive ? '3px solid #3b82f6' : '3px solid transparent',
-        borderRadius: isActive ? '0 9px 9px 0' : '9px',
+        transition: 'all 0.1s ease',
+        background: isActive ? '#f0f9ff' : 'transparent',
+        color: isActive ? '#0284c7' : '#475569',
+        borderRadius: '6px',
         boxShadow: 'none',
         transform: 'none',
-        marginBottom: '1px'
+      }}
+      onMouseOver={(e) => {
+        if (!isActive) {
+          e.currentTarget.style.background = '#f8fafc';
+          e.currentTarget.style.color = '#0f172a';
+        }
+      }}
+      onMouseOut={(e) => {
+        if (!isActive) {
+          e.currentTarget.style.background = 'transparent';
+          e.currentTarget.style.color = '#475569';
+        }
       }}
     >
-      {icon && <span style={{ fontSize: '15px' }}>{icon}</span>}
-      {sub && !icon && (
-        <span style={{
-          width: '5px', height: '5px', borderRadius: '50%',
-          background: isActive ? '#3b82f6' : '#334155',
-          flexShrink: 0
-        }} />
-      )}
-      <span>{label}</span>
+      {label}
     </button>
   );
 }

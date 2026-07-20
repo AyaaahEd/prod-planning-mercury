@@ -141,7 +141,7 @@ public class JobPalette extends AggregateRoot {
             }
         } else if (event instanceof JobPaletteStatusUpdatedEvent e) {
             this.status = e.getStatus();
-        } else if (event instanceof JobPaletteDeletedEvent e) {
+        } else if (event instanceof JobPaletteDeletedEvent) {
             this.deleted = true;
         }
     }

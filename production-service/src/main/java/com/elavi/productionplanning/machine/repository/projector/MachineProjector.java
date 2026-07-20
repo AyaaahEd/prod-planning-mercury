@@ -1,4 +1,4 @@
-﻿package com.elavi.productionplanning.machine.repository.projector;
+package com.elavi.productionplanning.machine.repository.projector;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

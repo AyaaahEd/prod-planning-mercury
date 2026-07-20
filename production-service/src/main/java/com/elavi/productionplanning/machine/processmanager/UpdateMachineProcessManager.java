@@ -3,7 +3,6 @@ package com.elavi.productionplanning.machine.processmanager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import com.elavi.productionplanning.machine.domain.Machine;
 import com.elavi.productionplanning.machine.domain.event.MachineEvents.MachineReservedEvent;
 
 @Component
